@@ -44,22 +44,33 @@ if __name__ == '__main__':
 		size = int(sys.argv[2])
 		K = int(sys.argv[3])
 		hdfs_dir = sys.argv[4]
+		L = int(sys.argv[5])
 	
 		upload_data(data_file, hdfs_dir)
 		init_centers(data_file)
 
-		cmd = './comp_f.sh %s' % (hdfs_dir) 
-		cmd2 = 'hadoop fs -cat %s/centers_0_f/*' % (hdfs_dir) 
+		cmd = './comp_f.sh centers_0_0 centers_0_f %s' % (hdfs_dir)
+		cmd2 = 'hadoop fs -cat %s/centers_0_f/*' % (hdfs_dir)
 		os.system(cmd)
-		f = float(os.popen(cmd2).read().strip())
-		print f
-		tt = int(math.log10(f0)+1)
+		F = float(os.popen(cmd2).read().strip())
+		print F
+		tt = int(math.log10(F)+1)
 		print tt
+	
+	
+		for iter in xrange(tt):
+			cmd = './comp_f.sh centers_0_seeds centers_0_f %s' % (hdfs_dir)
+			cmd2 = 'hadoop fs -cat %s/centers_0_f/*' % (hdfs_dir)
+			os.system(cmd)
+			F = float(os.popen(cmd2).read().strip())
 		
-		#for iter in xrange(tt):
+			cmd = './sample.sh %s %d' % (hdfs_dir, L)
+			cmd2 = 'hadoop fs -cat %s/centers_0_%d/* >> centers_0_seeds' % (hdfs_dir, iter)
+			os.system(cmd)
+			os.system(cmd2)
 			
-		
-		cmd = './count.sh'
+		cmd = './count.sh %s' % (hdfs_dir)
+		os.system(cmd)
 
 		
 		#centers = [[0 for col in range(size)] for row in range(K)]

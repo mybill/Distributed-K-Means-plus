@@ -28,7 +28,8 @@ def mapper():
 			dist[i] = comp_dist(cols, centers[i])
 		sum += min(dist)
 	print sum
-		
+
+
 def reducer():
 	sum = 0
 	for line in sys.stdin:
@@ -42,4 +43,3 @@ if __name__ == '__main__':
 		reducer()
 	else:
 		print 'argument error!'
-
