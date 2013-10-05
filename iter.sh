@@ -1,8 +1,7 @@
 #!/bin/sh
-HADOOP="/home/work/hadoop-client/hadoop/bin/hadoop"
 OUTPUT="${2}/centers_$((${1}+1))"
 
-${HADOOP} streaming \
+hadoop streaming \
 	-input "${2}/datas" \
 	-output ${OUTPUT} \
 	-mapper "python26/bin/python26.sh mapper.py ${1}" \
@@ -17,6 +16,6 @@ ${HADOOP} streaming \
 	-jobconf mapred.job.reduce.capacity=2 \
 	-jobconf mapred.job.name="mybill_kmeans-${1}"
 
-${HADOOP} fs -cat ${OUTPUT}/* > centers_$((${1}+1))
+hadoop fs -cat ${OUTPUT}/* > centers_$((${1}+1))
 
 exit 0

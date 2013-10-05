@@ -20,8 +20,7 @@ def comp_dist(X,Y):
 
 
 if __name__ == '__main__':
-	filename = sys.argv[1]
-	centers = read_center(filename)
+	centers = read_center('centers_seeds')
 	K = len(centers)
 	dist = [0]*K
 	for line in sys.stdin:
