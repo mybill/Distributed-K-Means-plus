@@ -1,0 +1,25 @@
+MaoYi
+目标：实现Distributed K-Means++
+
+10-3:
+实现部分步骤
+
+10-4:
+实现完整步骤的Distributed K-Means++
+
+10-5:
+测试，修改部分代码
+
+
+RUN: python run.py data_file K hdfs_dir r l/k
+	data_file -- 数据文件
+	K -- 类个数
+	hdfs_dir -- Hadoop HDFS目录
+	r -- k-means||循环数（若为0则r为[ln(F)]）
+	l/k -- l比k的倍数
+
+过程：
+1. 随机取一个点
+2. r次循环，以l*d^2/sum(d^2)的概率取seeds
+3. K次循环，从seeds中以d^2/sum(d^2)取点
+4. 循环至收敛
